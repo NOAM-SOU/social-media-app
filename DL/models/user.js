@@ -1,5 +1,5 @@
-// require("../db").connect();
 const mongoose = require("mongoose");
+const post = require("./post");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   biography: {
     type: String,
@@ -51,6 +52,18 @@ const userSchema = new mongoose.Schema({
       ref: "comment",
     },
   ],
+  numberOfPosts: {
+    type: Number,
+    default: 0,
+  },
+  numberOfFollowers: {
+    type: Number,
+    default: 0,
+  },
+  numberOfFollowed: {
+    type: Number,
+    default: 0,
+  },
   isActive: {
     type: Boolean,
     default: true,

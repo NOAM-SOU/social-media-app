@@ -1,15 +1,22 @@
-class userError extends Error {
+class UserError extends Error {
   constructor(message, code) {
     super(message);
     this.code = code;
   }
 }
 
-class postError extends Error {
+class PostError extends Error {
   constructor(message, code) {
     super(message);
     this.code = code;
   }
 }
 
-module.exports = { userError, postError };
+class AuthError extends Error {
+  constructor(message, code) {
+    super(message);
+    this.code = code;
+  }
+}
+
+module.exports = { UserError, PostError, AuthError };

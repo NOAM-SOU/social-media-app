@@ -1,7 +1,7 @@
+// @ts-check
 const posts = require("../DL/controllers/postController");
 const users = require("../DL/controllers/userController");
-const likes = require("../DL/controllers/likeController");
-require("../DL/db").connect();
+const { PostError } = require("./errors");
 
 /**
  * @param {object} input
@@ -10,56 +10,73 @@ require("../DL/db").connect();
 
 const addNewPost = async (input, id) => {
   const newPost = await posts.create({ ...input, userId: id });
-  const addPostToUser = await users.update(id, "posts", newPost);
-  return newPost, addPostToUser;
-};
-
-/**
- *
- * @param {string} id
- * @param {string} postId
- * @return {Promise<object>}
- */
-
-const addLikeToPost = async (id, postId) => {
-  const newLike = await likes.create({ userId: id, postId });
-  const addLikeToPost = await posts.update(
-    postId,
-    "likes",
-    newLike,
-    "numberOfLikes"
+  const addPostToUser = await users.update(
+    id,
+    "posts",
+    newPost,
+    "numberOfPosts"
   );
-  return addLikeToPost;
+  return { newPost, addPostToUser };
 };
 
 /**
- *
  * @param {string} id
+ * @param {string} postId
  * @return {Promise<object>}
  */
 
-const deletePost = async (id) => {
-  const postDeleted = await posts.del(id);
-  console.log(postDeleted);
-  return postDeleted;
+const deletePost = async (id, postId) => {
+  const delPostFromUser = await users.updateUser(
+    id,
+    "posts",
+    postId,
+    "numberOfPosts"
+  );
+  const del = await posts.del(postId);
+
+  return { delPostFromUser, del };
 };
 
 /**
- *
- * @param {string} postId
  * @param {string} userId
+ * @param {string} postId
  * @returns {Promise<object>}
  */
 
-const savePost = async (postId, userId) => {
-  const pushToUser = await users.update(userId, "savedPosts", postId);
-  const postSaved = await posts.update(
+const savePost = async (userId, postId) => {
+  const userSaved = await users.readOne({
+    _id: userId,
+  });
+  const array = userSaved.savedPosts.map((e) => e.toString());
+  if (array.includes(postId)) throw new PostError("Post already saved", 1);
+  await users.update(userSaved._id, "savedPosts", postId);
+  const postSaved = await posts.addUpdate(
     postId,
     "savedBy",
     userId,
     "numberOfSave"
   );
-  return postSaved, pushToUser;
+  return postSaved;
 };
 
-module.exports = { addNewPost, addLikeToPost, deletePost, savePost };
+const removeSavedPost = async (userId, postId) => {
+  const userSaved = await users.updateUser(userId, "savedPosts", postId);
+  const postSaved = await posts.removeUpdate(
+    postId,
+    userId,
+    "savedBy",
+    "numberOfSave"
+  );
+  return { userSaved, postSaved };
+};
+
+/**
+ * @returns {Promise<array>}
+ */
+
+module.exports = {
+  addNewPost,
+  deletePost,
+  savePost,
+  removeSavedPost,
+};

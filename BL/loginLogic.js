@@ -1,7 +1,7 @@
+// @ts-check
 const bcrypt = require("bcrypt");
 const users = require("../DL/controllers/userController");
-const { userError } = require("../BL/errors");
-// require("../DL//db").connect();
+const { AuthError } = require("../BL/errors");
 const { createUserToken } = require("../BL/userLogic");
 
 /**
@@ -9,13 +9,12 @@ const { createUserToken } = require("../BL/userLogic");
  */
 
 const login = async (input) => {
-  const user = await users.readOne({ email: input.email });
-  if (!user) {
-    throw new userError("User not found", 2);
-  }
+  let user = await users.readOne({ email: input.email }, { password: 1 });
+  console.log(user);
+  if (!user) throw new AuthError("User not found", 2);
   const match = await bcrypt.compare(input.password, user.password);
-  if (!match) throw userError("Wrong password", 3);
-  console.log(createUserToken(user));
+  if (!match) throw new AuthError("Wrong password", 3);
+  user = await users.readOne({ email: input.email });
   return createUserToken(user);
 };
 

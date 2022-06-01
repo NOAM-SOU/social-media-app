@@ -1,3 +1,4 @@
+// @ts-check
 const jwt = require("jsonwebtoken");
 const users = require("../DL/controllers/userController");
 // require("../DL//db").connect();
@@ -7,7 +8,6 @@ const users = require("../DL/controllers/userController");
  */
 
 const createUserToken = (input) => {
-  console.log(process.env.JWT_SECRET);
   const token = jwt.sign(
     {
       input,
@@ -21,13 +21,16 @@ const createUserToken = (input) => {
 };
 
 /**
- *
  * @param {string} userId
  */
 
 const deleteUser = async (userId) => {
   const deletedUser = await users.del(userId);
-  console.log(deletedUser);
 };
 
-module.exports = { createUserToken };
+const getAllUsers = async () => {
+  const allUsers = await users.read();
+  return allUsers;
+};
+
+module.exports = { createUserToken, deleteUser, getAllUsers };

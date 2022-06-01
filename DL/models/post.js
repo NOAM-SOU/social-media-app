@@ -1,5 +1,5 @@
-// require("../db").connect();
 const mongoose = require("mongoose");
+const user = require("./user");
 
 const postSchema = new mongoose.Schema({
   title: {
@@ -17,6 +17,7 @@ const postSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
+    required: true,
   },
   comments: [
     {
