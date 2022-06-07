@@ -6,11 +6,7 @@ const { UserError } = require("../BL/errors");
 router.post("/addcomments", async (req, res) => {
   try {
     console.log("addcomment: request", req.body);
-    const data = await addNewComment(
-      req.user.input._id,
-      req.body.postId,
-      req.body
-    );
+    const data = await addNewComment(req.user._id, req.body.postId, req.body);
     res.send(data);
   } catch (err) {
     if (err instanceof UserError) {

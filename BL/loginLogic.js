@@ -10,7 +10,6 @@ const { createUserToken } = require("../BL/userLogic");
 
 const login = async (input) => {
   let user = await users.readOne({ email: input.email }, { password: 1 });
-  console.log(user);
   if (!user) throw new AuthError("User not found", 2);
   const match = await bcrypt.compare(input.password, user.password);
   if (!match) throw new AuthError("Wrong password", 3);

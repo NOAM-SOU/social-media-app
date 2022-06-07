@@ -6,7 +6,7 @@ const { UserError } = require("../BL/errors");
 router.post("/addlike", async (req, res) => {
   try {
     console.log("addLike: request", req.body);
-    const data = await addLikeToPost(req.user.input._id, req.body.postId);
+    const data = await addLikeToPost(req.user._id, req.body.postId);
     res.send(data);
   } catch (err) {
     if (err instanceof UserError) {
@@ -26,7 +26,7 @@ router.post("/addlike", async (req, res) => {
 router.post("/removelike", async (req, res) => {
   try {
     console.log("removeLike: request", req.body);
-    const data = await removeLike(req.user.input._id, req.body.postId);
+    const data = await removeLike(req.user._id, req.body.postId);
     res.send(data);
   } catch (err) {
     if (err instanceof UserError) {

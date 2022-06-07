@@ -11,8 +11,8 @@ const {
 
 router.post("/addnewpost", async (req, res) => {
   try {
-    console.log("newPost: request", req.body, "ma", req.user.input._id);
-    const data = await addNewPost(req.body, req.user.input._id);
+    console.log("newPost: request", req.body, "ma", req.user);
+    const data = await addNewPost(req.body, req.user._id);
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {
@@ -32,7 +32,7 @@ router.post("/addnewpost", async (req, res) => {
 router.post("/deletepost", async (req, res) => {
   try {
     console.log("delete: request", req.body);
-    const data = await deletePost(req.user.input._id, req.body.postId);
+    const data = await deletePost(req.user._id, req.body.postId);
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {
@@ -50,13 +50,8 @@ router.post("/deletepost", async (req, res) => {
 
 router.post("/savepost", async (req, res) => {
   try {
-    console.log(
-      "savepost: request",
-      req.user.input._id,
-      "posr",
-      req.body.postId
-    );
-    const data = await savePost(req.user.input._id, req.body.postId);
+    console.log("savepost: request", req.user._id, "posr", req.body.postId);
+    const data = await savePost(req.user._id, req.body.postId);
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {
@@ -75,7 +70,7 @@ router.post("/savepost", async (req, res) => {
 router.post("/removesavedpost", async (req, res) => {
   try {
     console.log("savepost: request", req.body);
-    const data = await removeSavedPost(req.user.input._id, req.body.postId);
+    const data = await removeSavedPost(req.user._id, req.body.postId);
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {

@@ -32,7 +32,7 @@ app.use("/api/user/follow", auth, require("./Routes/followRouter"));
 app.use("/api/authuser", require("./Routes/userRouter"));
 
 // app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-const PORT = process.env.PORT || 3001;
+const PORT = 5000 || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

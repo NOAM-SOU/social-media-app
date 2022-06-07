@@ -1,9 +1,6 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const secret = process.env.JWT_SECRET;
-/**
- * @param {string} input
- */
 
 const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -15,7 +12,7 @@ const auth = (req, res, next) => {
         console.log(err);
         return res.sendStatus(403);
       }
-      req.user = user;
+      req.user = user.input;
       next();
     });
   } else {
