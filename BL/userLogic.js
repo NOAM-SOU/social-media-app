@@ -1,17 +1,15 @@
 // @ts-check
 const jwt = require("jsonwebtoken");
 const users = require("../DL/controllers/userController");
-// require("../DL//db").connect();
 
 /**
- * @param {object} input
+ * @param {object} user
  */
 
-const createUserToken = (input) => {
+const createUserToken = (user) => {
+  const { _id, name, email, profileImg } = user;
   const token = jwt.sign(
-    {
-      input,
-    },
+    { _id, name, email, profileImg },
     process.env.JWT_SECRET,
     {
       expiresIn: "1h",
