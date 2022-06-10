@@ -12,7 +12,7 @@ const createUserToken = (user) => {
     { _id, name, email, profileImg },
     process.env.JWT_SECRET,
     {
-      expiresIn: "1h",
+      expiresIn: "10h",
     }
   );
   return { auth_token: token };

@@ -2,6 +2,7 @@ const express = require("express");
 router = express.Router();
 const { signUp } = require("../BL/registerLogic");
 const { login } = require("../BL/loginLogic");
+const { getUser } = require("../BL/userLogic");
 const { AuthError } = require("../BL/errors");
 
 router.post("/register", async (req, res) => {

@@ -3,7 +3,6 @@ const users = require("../DL/controllers/userController");
 const { AuthError } = require("../BL/errors");
 const bcrypt = require("bcrypt");
 const { createUserToken } = require("./userLogic");
-// require("../DL//db").connect();
 
 /**
  * @param {object} input
@@ -15,20 +14,8 @@ const signUp = async (input) => {
     throw new AuthError("User already exist", 1);
   }
   const hash = await bcrypt.hash(input.password, 10);
-  const {password, ...user} = await users.create({ ...input, password: hash });
-
+  const user = await users.create({ ...input, password: hash });
   return createUserToken(user);
 };
-
-const user = {
-  name: "majida",
-  email: "majida@gmail.com",
-  password: "098765",
-  biography: "I am A singer",
-  profileImg:
-    "https://www.telemundo.com/sites/nbcutelemundo/files/images/article/cover/2020/01/23/poster-de-operacion-pacifico.jpg",
-};
-
-// signUp(user);
 
 module.exports = { signUp };

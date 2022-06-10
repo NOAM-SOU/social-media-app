@@ -1,4 +1,3 @@
-// require("../db").connect();
 const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema({

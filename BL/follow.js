@@ -37,4 +37,10 @@ const getPosts = async (userId) => {
   return arrays.flat();
 };
 
-module.exports = { addFollow, getPosts };
+const getUser = async (userId) => {
+  const res = await users.readOne({ _id: userId });
+  console.log(res);
+  return res;
+};
+
+module.exports = { addFollow, getPosts, getUser };

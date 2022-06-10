@@ -73,10 +73,15 @@ const removeSavedPost = async (userId, postId) => {
 /**
  * @returns {Promise<array>}
  */
+const getUserPosts = async (userId) => {
+  const get = await users.readAndPopulate(userId, "posts");
+  return get.posts;
+};
 
 module.exports = {
   addNewPost,
   deletePost,
   savePost,
   removeSavedPost,
+  getUserPosts,
 };
