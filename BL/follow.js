@@ -43,4 +43,9 @@ const getUser = async (userId) => {
   return res;
 };
 
-module.exports = { addFollow, getPosts, getUser };
+const getAllUsers = async () => {
+  const allUsers = await users.read();
+  return allUsers;
+};
+
+module.exports = { addFollow, getPosts, getUser, getAllUsers };

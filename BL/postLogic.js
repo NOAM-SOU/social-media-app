@@ -32,9 +32,8 @@ const deletePost = async (id, postId) => {
     postId,
     "numberOfPosts"
   );
-  const del = await posts.del(postId);
-
-  return { delPostFromUser, del };
+  await posts.del(postId);
+  return delPostFromUser;
 };
 
 /**

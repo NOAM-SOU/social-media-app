@@ -26,9 +26,4 @@ const deleteUser = async (userId) => {
   const deletedUser = await users.del(userId);
 };
 
-const getAllUsers = async () => {
-  const allUsers = await users.read();
-  return allUsers;
-};
-
-module.exports = { createUserToken, deleteUser, getAllUsers };
+module.exports = { createUserToken, deleteUser };

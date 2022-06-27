@@ -32,7 +32,12 @@ router.post("/addnewpost/:id", async (req, res) => {
 
 router.delete("/deletepost/:userid/:id", async (req, res) => {
   try {
-    console.log("delete: request", req.body);
+    console.log(
+      "userId: request",
+      req.params.userid,
+      "postId: request",
+      req.params.id
+    );
     const data = await deletePost(req.params.userid, req.params.id);
     res.send(data);
   } catch (err) {

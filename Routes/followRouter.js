@@ -1,6 +1,6 @@
 const express = require("express");
 router = express.Router();
-const { addFollow, getPosts, getUser } = require("../BL/follow");
+const { addFollow, getPosts, getUser, getAllUsers } = require("../BL/follow");
 const { UserError } = require("../BL/errors");
 
 router.post("/addfollow/:id", async (req, res) => {
@@ -47,6 +47,24 @@ router.get("/getuser/:id", async (req, res) => {
   try {
     console.log("getUser: request", req.params.id);
     const data = await getUser(req.params.id);
+    res.send(data);
+  } catch (err) {
+    if (err instanceof UserError) {
+      res.status(401).send({
+        error: err.message,
+        code: err.code,
+      });
+    } else {
+      res.status(500).send({
+        error: err.message,
+      });
+    }
+  }
+});
+
+router.get("/getall", async (req, res) => {
+  try {
+    const data = await getAllUsers();
     res.send(data);
   } catch (err) {
     if (err instanceof UserError) {
