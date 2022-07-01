@@ -77,10 +77,15 @@ const getUserPosts = async (userId) => {
   return get.posts;
 };
 
+const getPost = async (id) => {
+  return await posts.readOne(id);
+};
+
 module.exports = {
   addNewPost,
   deletePost,
   savePost,
   removeSavedPost,
   getUserPosts,
+  getPost,
 };

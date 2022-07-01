@@ -8,6 +8,7 @@ const {
   savePost,
   removeSavedPost,
   getUserPosts,
+  getPost,
 } = require("../BL/postLogic");
 
 router.post("/addnewpost/:id", async (req, res) => {
@@ -96,6 +97,26 @@ router.get("/new/:id", async (req, res) => {
   try {
     console.log("get: request", req.params.id);
     const data = await getUserPosts(req.params.id);
+    console.log("get: response", data);
+    res.send(data);
+  } catch (err) {
+    if (err instanceof PostError) {
+      res.status(401).send({
+        error: err.message,
+        code: err.code,
+      });
+    } else {
+      res.status(500).send({
+        error: err.message,
+      });
+    }
+  }
+});
+
+router.get("/getpost/:id", async (req, res) => {
+  try {
+    console.log("get: request", req.params.id);
+    const data = await getPost(req.params.id);
     console.log("get: response", data);
     res.send(data);
   } catch (err) {
