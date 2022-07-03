@@ -78,7 +78,7 @@ const getUserPosts = async (userId) => {
 };
 
 const getPost = async (id) => {
-  return await posts.readOne(id);
+  return await posts.readOne({ _id: id });
 };
 
 module.exports = {
