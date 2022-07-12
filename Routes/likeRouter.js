@@ -3,10 +3,10 @@ router = express.Router();
 const { addLikeToPost, removeLike, getLikes } = require("../BL/likeLogic");
 const { UserError } = require("../BL/errors");
 
-router.post("/addlike", async (req, res) => {
+router.post("/addlike/:userId/:postId", async (req, res) => {
   try {
     console.log("addLike: request", req.body);
-    const data = await addLikeToPost(req.user._id, req.body.postId);
+    const data = await addLikeToPost(req.params.userId, req.params.postId);
     res.send(data);
   } catch (err) {
     if (err instanceof UserError) {
