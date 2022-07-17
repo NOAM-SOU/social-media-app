@@ -1,6 +1,5 @@
 const express = require("express");
 router = express.Router();
-
 const { PostError } = require("../BL/errors");
 const {
   addNewPost,
@@ -10,127 +9,36 @@ const {
   getUserPosts,
   getPost,
 } = require("../BL/postLogic");
+const { routerFunc } = require("../BL/tools");
 
 router.post("/addnewpost/:id", async (req, res) => {
-  try {
-    console.log("newPost: request", req.body, "ma", req.params.id);
-    const data = await addNewPost(req.body, req.params.id);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof PostError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-        code: err.code,
-      });
-    }
-  }
+  routerFunc(res, PostError, addNewPost, req.body, req.params.id);
 });
 
 router.delete("/deletepost/:userid/:id", async (req, res) => {
-  try {
-    console.log(
-      "userId: request",
-      req.params.userid,
-      "postId: request",
-      req.params.id
-    );
-    const data = await deletePost(req.params.userid, req.params.id);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof PostError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+  routerFunc(res, PostError, deletePost, req.params.userid, req.params.id);
 });
 
-router.post("/savepost", async (req, res) => {
-  try {
-    console.log("savepost: request", req.user._id, "posr", req.body.postId);
-    const data = await savePost(req.user._id, req.body.postId);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof PostError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+router.get("/savepost/:userid/:postid", async (req, res) => {
+  routerFunc(res, PostError, savePost, req.params.userid, req.params.postid);
 });
 
-router.post("/removesavedpost", async (req, res) => {
-  try {
-    console.log("savepost: request", req.body);
-    const data = await removeSavedPost(req.user._id, req.body.postId);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof PostError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+router.get("/removesavedpost/:userid/:postid", async (req, res) => {
+  routerFunc(
+    res,
+    PostError,
+    removeSavedPost,
+    req.params.userid,
+    req.params.postid
+  );
 });
 
 router.get("/new/:id", async (req, res) => {
-  try {
-    console.log("get: request", req.params.id);
-    const data = await getUserPosts(req.params.id);
-    console.log("get: response", data);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof PostError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+  routerFunc(res, PostError, getUserPosts, req.params.id);
 });
 
 router.get("/getpost/:id", async (req, res) => {
-  try {
-    console.log("get: request", req.params.id);
-    const data = await getPost(req.params.id);
-    console.log("get: response", data);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof PostError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+  routerFunc(res, PostError, getPost, req.params.id);
 });
 
 module.exports = router;

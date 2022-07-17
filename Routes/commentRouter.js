@@ -2,44 +2,21 @@ const express = require("express");
 router = express.Router();
 const { addNewComment, getComments } = require("../BL/commentLogic");
 const { UserError } = require("../BL/errors");
+const { routerFunc } = require("../BL/tools");
 
-router.post("/addcomments", async (req, res) => {
-  try {
-    console.log("addcomment: request", req.body);
-    const data = await addNewComment(req.user._id, req.body.postId, req.body);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof UserError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-        code: err.code,
-      });
-    }
-  }
+router.post("/addcomments/:userid/:postid", async (req, res) => {
+  routerFunc(
+    res,
+    UserError,
+    addNewComment,
+    req.params.userid,
+    req.params.postid,
+    req.body
+  );
 });
 
 router.get("/getcomments/:id", async (req, res) => {
-  try {
-    console.log("getcomments: request", req.body);
-    const data = await getComments(req.params.id);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof UserError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+  routerFunc(res, UserError, getComments, req.params.id);
 });
 
 module.exports = router;

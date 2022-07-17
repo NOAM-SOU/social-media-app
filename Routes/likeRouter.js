@@ -2,63 +2,24 @@ const express = require("express");
 router = express.Router();
 const { addLikeToPost, removeLike, getLikes } = require("../BL/likeLogic");
 const { UserError } = require("../BL/errors");
+const { routerFunc } = require("../BL/tools");
 
-router.post("/addlike/:userId/:postId", async (req, res) => {
-  try {
-    console.log("addLike: request", req.body);
-    const data = await addLikeToPost(req.params.userId, req.params.postId);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof UserError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-        code: err.code,
-      });
-    }
-  }
+router.get("/addlike/:userid/:postid", async (req, res) => {
+  routerFunc(
+    res,
+    UserError,
+    addLikeToPost,
+    req.params.userid,
+    req.params.postid
+  );
 });
 
-router.post("/removelike", async (req, res) => {
-  try {
-    console.log("removeLike: request", req.body);
-    const data = await removeLike(req.user._id, req.body.postId);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof UserError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+router.get("/removelike/:userid/:postid", async (req, res) => {
+  routerFunc(res, UserError, removeLike, req.params.userid, req.params.postid);
 });
 
 router.get("/getlikes/:id", async (req, res) => {
-  try {
-    console.log("getlikes: request", req.body);
-    const data = await getLikes(req.params.id);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof UserError) {
-      res.status(401).send({
-        error: err.message,
-        code: err.code,
-      });
-    } else {
-      res.status(500).send({
-        error: err.message,
-      });
-    }
-  }
+  routerFunc(res, UserError, getLikes, req.params.id);
 });
 
 module.exports = router;
