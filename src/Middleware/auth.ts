@@ -13,7 +13,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
         console.log(err);
         return res.sendStatus(403);
       }
-      console.log("reqqqq");
+      // console.log("reqqqq authhhh", req);
 
       next();
     });

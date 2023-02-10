@@ -1,5 +1,5 @@
 import { PostI } from "../../interfaces/post";
-
+import user from "./user";
 import mongoose, { HydratedDocument } from "mongoose";
 
 export type PostDocument = HydratedDocument<PostI>;

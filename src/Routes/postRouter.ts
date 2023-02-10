@@ -12,6 +12,7 @@ import {
 const router = express.Router();
 
 router.post("/addnewpost/:id", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
@@ -28,6 +29,7 @@ router.post("/addnewpost/:id", async (req, res) => {
 });
 
 router.delete("/deletepost/:userid/:id", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
@@ -43,11 +45,12 @@ router.delete("/deletepost/:userid/:id", async (req, res) => {
   }
 });
 
-router.get("/savepost/:email/:postid", async (req, res) => {
+router.get("/savepost/:id/:postid", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
-    const data = await savePost(req.params.email, req.params.postid);
+    const data = await savePost(req.params.id, req.params.postid);
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {
@@ -59,6 +62,7 @@ router.get("/savepost/:email/:postid", async (req, res) => {
   }
 });
 router.get("/removesavedpost/:userid/:postid", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
@@ -74,6 +78,7 @@ router.get("/removesavedpost/:userid/:postid", async (req, res) => {
   }
 });
 router.get("/new/:id", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
@@ -89,6 +94,7 @@ router.get("/new/:id", async (req, res) => {
   }
 });
 router.get("/getpost/:id", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 

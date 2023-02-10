@@ -1,9 +1,12 @@
 import {
-  read,
-  readAndNestedPopulate,
   readOne,
   update,
+  findByInAndPopulte,
+  readbyId,
+  read,
+  updateUser,
 } from "../DL/controllers/userController";
+import { UserDocument } from "../DL/models/user";
 
 export const addFollow = async (userId: string, to: string) => {
   const newFollow = await update(to, "followers", userId, "numberOfFollowers");
@@ -11,12 +14,29 @@ export const addFollow = async (userId: string, to: string) => {
   return { newFollow, newFollowed };
 };
 
-export const getPosts = async (userId: string) => {
-  const get = await readAndNestedPopulate(userId, "followed", "post", "posts");
-  const arrays = await get.followed.map((p) => {
-    return p;
-  });
-  return arrays.flat();
+export const removeFollow = async (userId: string, from: string) => {
+  const removeFromUser = await updateUser(
+    userId,
+    "followed",
+    from,
+    "numberOfFollowed"
+  );
+  const removeFromFollowedUser = await updateUser(
+    from,
+    "followers",
+    userId,
+    "numberOfFollowers"
+  );
+  return { removeFromUser, removeFromFollowedUser };
+};
+
+export const getFollowedPosts = async (userId: string) => {
+  const get: UserDocument | null = await readbyId(userId);
+  if (!get) {
+    return [];
+  }
+  const followedUsers = await findByInAndPopulte("_id", get.followed, "posts");
+  return followedUsers.flatMap((followedUser) => followedUser.posts);
 };
 
 export const getUser = async (email: string) => {
@@ -26,6 +46,5 @@ export const getUser = async (email: string) => {
 };
 
 export const getAllUsers = async () => {
-  const allUsers = await read();
-  return allUsers;
+  return await read();
 };

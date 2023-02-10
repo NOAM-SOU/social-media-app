@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { CommentI } from "../../interfaces/comment";
+
 const commentSchema = new mongoose.Schema<CommentI>({
   content: {
     type: String,
@@ -19,4 +20,4 @@ const commentSchema = new mongoose.Schema<CommentI>({
   },
 });
 
-module.exports = mongoose.model("comment", commentSchema);
+export default mongoose.model("comment", commentSchema);

@@ -4,7 +4,7 @@ export interface PostI {
   title: string;
   content: string;
   img: string;
-  userId: string;
+  userId: Types.ObjectId;
   comments: Types.ObjectId;
   likes: Types.ObjectId;
   savedBy: Types.ObjectId[];

@@ -8,14 +8,17 @@ import {
 } from "../DL/controllers/postController";
 import {
   readAndPopulate,
+  readbyId,
   readOne,
   update,
   updateUser,
 } from "../DL/controllers/userController";
 import { PostI } from "../interfaces/post";
 import { PostError } from "./errors";
+
 export const addNewPost = async (post: PostI, id: string) => {
-  const newPost = await create({ ...post, userId: id });
+  const newPost = await create(post, id);
+
   const addPostToUser = await update(
     id,
     "posts",
@@ -36,8 +39,8 @@ export const deletePost = async (id: string, postId: string) => {
   return delPostFromUser;
 };
 
-export const savePost = async (email: string, postId: string) => {
-  const userSaved = await readOne(email);
+export const savePost = async (id: string, postId: string) => {
+  const userSaved = await readbyId(id);
   if (userSaved) {
     const array = userSaved.savedPosts.map((e: object) => e.toString());
     if (array.includes(postId)) throw new PostError("Post already saved", 1);

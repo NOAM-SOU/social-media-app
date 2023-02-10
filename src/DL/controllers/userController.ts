@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { UserI } from "../../interfaces/user";
-import userModel from "../models/user";
+import userModel, { UserDocument } from "../models/user";
 
 export const create = async (user: UserI) => {
   return await userModel.create(user);
@@ -15,7 +15,7 @@ export const readOne = async (email: string) => {
 };
 
 export async function readbyId(id: string) {
-  return await userModel.findById({ id });
+  return await userModel.findById({ _id: id });
 }
 
 export async function del(id: string) {
@@ -66,22 +66,56 @@ export async function updateUser(
   );
 }
 
+// export async function readAndNestedPopulate(
+//   userId: string,
+//   path: string,
+//   path2: string,
+//   model: string
+// ) {
+//   return await userModel.findOne({ _id: userId }).populate({
+//     path: path,
+//     populate: {
+//       path: path2,
+//       model: model,
+//     },
+//   });
+// }
+
 export async function readAndNestedPopulate(
   userId: string,
   path: string,
-  model: string,
   path2: string
-  // by,
-  // limit
-) {
+): Promise<UserDocument | null> {
   return await userModel.findOne({ _id: userId }).populate({
     path: path,
     populate: {
       path: path2,
-      model: model,
     },
   });
 }
+
+export const findByInAndPopulte = async (
+  field: string,
+  values: Types.ObjectId[],
+  path: string
+) => {
+  return await userModel.find({ [field]: { $in: values } }).populate({
+    path: path,
+  });
+};
+
+export const followedUsers = async (user: UserDocument, path: string) => {
+  const lll = await userModel.find({
+    _id: { $in: user.followed },
+  });
+
+  console.log(lll);
+  return lll;
+
+  // .populate({
+  //   path: path,
+  // });
+};
 
 export async function readAndPopulate(
   userId: string,

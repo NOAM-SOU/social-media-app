@@ -4,6 +4,7 @@ import { addLikeToPost, getLikes, removeLike } from "../BL/likeLogic";
 const router = express.Router();
 
 router.get("/addlike/:userid/:postid", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
@@ -18,6 +19,7 @@ router.get("/addlike/:userid/:postid", async (req, res) => {
   }
 });
 router.get("/removelike/:userid/:postid", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 
@@ -33,6 +35,7 @@ router.get("/removelike/:userid/:postid", async (req, res) => {
 });
 
 router.get("/getlikes/:id", async (req, res) => {
+  // work
   try {
     console.log("req.body:", req.body);
 

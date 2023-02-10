@@ -1,8 +1,12 @@
 import { CommentI } from "../../interfaces/comment";
-import commentModel from "../models/post";
+import commentModel from "../models/comment";
 
-export const create = async (comment: CommentI) => {
-  return await commentModel.create(comment);
+export const create = async (
+  comment: CommentI,
+  userId: string,
+  postId: string
+) => {
+  return await commentModel.create({ ...comment, userId, postId });
 };
 
 export const read = async (): Promise<CommentI[]> => {

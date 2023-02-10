@@ -2,8 +2,8 @@ import { Types } from "mongoose";
 import { PostI } from "../../interfaces/post";
 import postModel from "../models/post";
 
-export const create = async (post: PostI) => {
-  return await postModel.create(post);
+export const create = async (post: PostI, id: string) => {
+  return await postModel.create({ ...post, userId: id });
 };
 
 export const read = async (): Promise<PostI[]> => {

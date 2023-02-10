@@ -1,29 +1,36 @@
-import { create } from "../DL/controllers/commentController";
+import { create, del } from "../DL/controllers/commentController";
 import { CommentI } from "../interfaces/comment";
 import { Types } from "mongoose";
 import {
   addUpdate,
   readAndNestedPopulate,
+  removeUpdate,
 } from "../DL/controllers/postController";
-import { filterFunc } from "./tools";
 
 export const addNewComment = async (
   userId: string,
   postId: string,
   comment: CommentI
 ) => {
-  const newComment = await create({
-    ...comment,
-    userId: userId,
-    postId: postId,
-  });
+  const newComment = await create(comment, userId, postId);
   const addCommentToPost = await addUpdate(
-    postId.toString(),
+    postId,
     "comments",
     newComment._id.toString(),
     "numberOfComments"
   );
   return { newComment, addCommentToPost };
+};
+
+export const deleteComment = async (postId: string, id: string) => {
+  const deleteCommentFromPost = await removeUpdate(
+    postId,
+    id,
+    "comments",
+    "numberOfComments"
+  );
+  await del(id);
+  return deleteCommentFromPost;
 };
 
 export const getComments = async (postId: string) => {
@@ -33,5 +40,8 @@ export const getComments = async (postId: string) => {
     "user",
     "userId"
   );
-  return filterFunc(getAll.comments);
+
+  return getAll?.comments;
+
+  // return filterFunc(getAll.comments);
 };

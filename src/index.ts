@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 import { connect } from "./DL/db";
 import { auth } from "./Middleware/auth";
 import userRouter from "./Routes/userRouter";
@@ -9,8 +10,6 @@ import followRouter from "./Routes/followRouter";
 import likesRouter from "./Routes/likeRouter";
 
 dotenv.config();
-
-const cors = require("cors");
 
 const app = express();
 
@@ -33,7 +32,7 @@ app.use("/api/user/follow", auth, followRouter);
 
 // app.use("/api/authuser", require("./Routes/userRouter"));
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
