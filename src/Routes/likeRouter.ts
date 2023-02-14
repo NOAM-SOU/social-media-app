@@ -1,5 +1,5 @@
 import express from "express";
-import { addLikeToPost, getLikes, removeLike } from "../BL/likeLogic";
+import { addLikeToPost, getLikes, removeLike } from "../BL/likeLogic/likeLogic";
 
 const router = express.Router();
 

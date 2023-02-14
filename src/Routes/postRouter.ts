@@ -1,5 +1,5 @@
 import express from "express";
-import { PostError } from "../BL/errors";
+import { PostError } from "../BL/errors/errors";
 import {
   addNewPost,
   deletePost,
@@ -7,7 +7,7 @@ import {
   getUserPosts,
   removeSavedPost,
   savePost,
-} from "../BL/postLogic";
+} from "../BL/postLogic/postLogic";
 
 const router = express.Router();
 

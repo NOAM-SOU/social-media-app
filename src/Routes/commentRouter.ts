@@ -1,5 +1,9 @@
 import express from "express";
-import { addNewComment, deleteComment, getComments } from "../BL/commentLogic";
+import {
+  addNewComment,
+  deleteComment,
+  getComments,
+} from "../BL/commentLogic/commentLogic";
 
 const router = express.Router();
 

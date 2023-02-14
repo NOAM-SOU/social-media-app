@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
+import { Document, Types } from "mongoose";
 
-export interface PostI {
+export interface PostI extends Document {
   title: string;
   content: string;
   img: string;

@@ -2,13 +2,13 @@ import { Types } from "mongoose";
 import { UserI } from "../../interfaces/user";
 import userModel, { UserDocument } from "../models/user";
 
-export const create = async (user: UserI) => {
-  return await userModel.create(user);
-};
+// export const create = async (user: UserI) => {
+//   return await userModel.create(user);
+// };
 
-export const read = async (): Promise<UserI[]> => {
-  return await userModel.find();
-};
+// export const read = async (): Promise<UserI[]> => {
+//   return await userModel.find();
+// };
 
 export const readOne = async (email: string) => {
   return await userModel.findOne({ email });
@@ -18,13 +18,13 @@ export async function readbyId(id: string) {
   return await userModel.findById({ _id: id });
 }
 
-export async function del(id: string) {
-  return await userModel.findByIdAndUpdate(
-    id,
-    { isActive: false },
-    { new: true }
-  );
-}
+// export async function del(id: string) {
+//   return await userModel.findByIdAndUpdate(
+//     id,
+//     { isActive: false },
+//     { new: true }
+//   );
+// }
 
 export const readOneAndPopulate = async (id: string, field: string) => {
   return await userModel.findOne({ _id: id }).populate(field);

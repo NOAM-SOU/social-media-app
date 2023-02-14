@@ -1,5 +1,5 @@
 import * as bcrypt from "bcrypt";
-import { UserDetails } from "../interfaces/user";
+import { UserDetails, UserI } from "../interfaces/user";
 import { UserDocument } from "../DL/models/user";
 
 export async function hashPassword(password: string): Promise<string> {
@@ -13,7 +13,7 @@ export async function comparePass(
   return await bcrypt.compare(password, hashPassword);
 }
 
-export async function getUser(user: UserDocument): Promise<UserDetails> {
+export async function getUser(user: UserI): Promise<UserDetails> {
   return await {
     id: user._id,
     name: user.name,

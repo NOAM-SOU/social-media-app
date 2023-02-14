@@ -1,10 +1,9 @@
 import express from "express";
-import { AuthError } from "../BL/errors";
-import { getAllUsers } from "../BL/follow";
-import { login } from "../BL/loginLogic";
+import { AuthError } from "../BL/errors/errors";
+import { login } from "../BL/userLogic/loginLogic";
+import { register } from "../BL/userLogic/registerLogic";
 const router = express.Router();
-import { register } from "../BL/registerLogic";
-import { getUser } from "../BL/userLogic";
+import { getUser } from "../BL/userLogic/userLogic";
 
 router.post("/register", async (req, res) => {
   // work
@@ -57,20 +56,20 @@ router.get("/getuser/:id", async (req, res) => {
   }
 });
 
-router.get("/getall", async (req, res) => {
-  // work
-  try {
-    console.log("req.body:", req.body);
+// router.get("/getall", async (req, res) => {
+//   // work
+//   try {
+//     console.log("req.body:", req.body);
 
-    const data = await getAllUsers();
-    res.send(data);
-  } catch (err) {
-    if (err instanceof Error) {
-      res.status(401).send({
-        error: err.message,
-      });
-    }
-  }
-});
+//     const data = await getAllUsers();
+//     res.send(data);
+//   } catch (err) {
+//     if (err instanceof Error) {
+//       res.status(401).send({
+//         error: err.message,
+//       });
+//     }
+//   }
+// });
 
 export default router;

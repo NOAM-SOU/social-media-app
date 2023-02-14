@@ -1,11 +1,11 @@
 import express from "express";
 import {
   addFollow,
-  getAllUsers,
+  // getAllUsers,
   getFollowedPosts,
   removeFollow,
-} from "../BL/follow";
-import { getUser } from "../BL/userLogic";
+} from "../BL/followLogic/follow";
+import { getUser } from "../BL/userLogic/userLogic";
 
 const router = express.Router();
 
