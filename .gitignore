@@ -4,3 +4,5 @@ node_modules
 txt
 noam.md
 yarn-error.log
+/controllers
+/services
