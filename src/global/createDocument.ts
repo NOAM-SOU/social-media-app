@@ -5,7 +5,8 @@ export async function create<T extends Document>(
   newDoc: T,
   id?: string,
 
-  set?: string
+  userId?: string,
+  postId?: string
 ): Promise<T> {
-  return await model.create({ ...newDoc, _id: id, set });
+  return await model.create({ ...newDoc, _id: id, userId, postId });
 }

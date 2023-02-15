@@ -11,7 +11,13 @@ export const addNewComment = async (
   postId: string,
   comment: CommentI
 ) => {
-  const newComment = await create(commentModel, comment, userId, postId);
+  const newComment = await create(
+    commentModel,
+    comment,
+    undefined,
+    userId,
+    postId
+  );
   const update: Update = {
     id: postId,
     field: "comments",

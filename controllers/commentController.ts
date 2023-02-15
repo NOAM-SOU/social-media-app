@@ -1,5 +1,5 @@
-import { CommentI } from "../../interfaces/comment";
-import commentModel from "../models/comment";
+import { CommentI } from "../interfaces/comment";
+import commentModel from "../DL/models/comment";
 
 export const create = async (
   comment: CommentI,

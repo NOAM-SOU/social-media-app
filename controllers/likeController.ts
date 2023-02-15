@@ -1,5 +1,5 @@
-import { LikeI } from "../../interfaces/like";
-import likeModel from "../models/post";
+import { LikeI } from "../interfaces/like";
+import likeModel from "../DL/models/post";
 
 export const create = async (comment: LikeI) => {
   return await likeModel.create(comment);

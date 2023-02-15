@@ -27,7 +27,7 @@ app.use("/api/user", userRouter);
 app.use("/api/user/post", auth, postRouter);
 
 app.use("/api/user/like", auth, likesRouter);
-app.use("/api/user/comment", auth, commentRouter);
+app.use("/api/user/comment", commentRouter);
 // app.use("/api/user/follow", auth, followRouter);
 
 // app.use("/api/authuser", require("./Routes/userRouter"));

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { UserI } from "../../interfaces/user";
-import userModel, { UserDocument } from "../models/user";
+import { UserI } from "../interfaces/user";
+import userModel, { UserDocument } from "../DL/models/user";
 
 // export const create = async (user: UserI) => {
 //   return await userModel.create(user);

@@ -1,9 +1,6 @@
 import express from "express";
-import {
-  addNewComment,
-  deleteComment,
-  getComments,
-} from "../BL/commentLogic/commentLogic";
+import { addNewComment } from "../BL/commentLogic/addComments";
+import { getComments } from "../BL/commentLogic/commentLogic";
 
 const router = express.Router();
 
@@ -45,20 +42,20 @@ router.get("/getcomments/:id", async (req, res) => {
   }
 });
 
-router.get("/deletecomment/:postid/:id", async (req, res) => {
-  // work
-  try {
-    console.log("req.body:", req.body);
+// router.get("/deletecomment/:postid/:id", async (req, res) => {
+//   // work
+//   try {
+//     console.log("req.body:", req.body);
 
-    const data = await deleteComment(req.params.postid, req.params.id);
-    res.send(data);
-  } catch (err) {
-    if (err instanceof Error) {
-      res.status(401).send({
-        error: err.message,
-      });
-    }
-  }
-});
+//     const data = await deleteComment(req.params.postid, req.params.id);
+//     res.send(data);
+//   } catch (err) {
+//     if (err instanceof Error) {
+//       res.status(401).send({
+//         error: err.message,
+//       });
+//     }
+//   }
+// });
 
 export default router;

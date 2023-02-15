@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { PostI } from "../../interfaces/post";
-import postModel from "../models/post";
+import { PostI } from "../interfaces/post";
+import postModel from "../DL/models/post";
 
 export const create = async (post: PostI, id: string) => {
   return await postModel.create({ ...post, userId: id });

@@ -25,12 +25,13 @@ export async function readAndNestedPopulate<T>(
 export async function findByInAndPopulte<T>(
   model: Model<T>,
   field: keyof T,
-  values: Types.ObjectId[],
+  values: Types.ObjectId[] | Types.ObjectId,
   path: string
 ) {
   const filter: FilterQuery<T> = [{ [field]: { $in: values } }];
+  console.log("filter", filter);
 
-  return await model.find(filter).populate({
+  return await model.find(filter[0]).populate({
     path: path,
   });
 }
