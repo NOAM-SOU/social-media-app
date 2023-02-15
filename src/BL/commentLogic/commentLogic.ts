@@ -2,46 +2,30 @@ import { create, del } from "../../DL/controllers/commentController";
 import { CommentI } from "../../interfaces/comment";
 import { Types } from "mongoose";
 import {
-  addUpdate,
+  findByInAndPopulte,
   readAndNestedPopulate,
-  removeUpdate,
-} from "../../DL/controllers/postController";
-
-export const addNewComment = async (
-  userId: string,
-  postId: string,
-  comment: CommentI
-) => {
-  const newComment = await create(comment, userId, postId);
-  const addCommentToPost = await addUpdate(
-    postId,
-    "comments",
-    newComment._id.toString(),
-    "numberOfComments"
-  );
-  return { newComment, addCommentToPost };
-};
-
-export const deleteComment = async (postId: string, id: string) => {
-  const deleteCommentFromPost = await removeUpdate(
-    postId,
-    id,
-    "comments",
-    "numberOfComments"
-  );
-  await del(id);
-  return deleteCommentFromPost;
-};
+} from "../../global/readAndPopulateDocument";
+import postModel from "../../DL/models/post";
+import { readById, readOne } from "../../global/readDocument";
 
 export const getComments = async (postId: string) => {
-  const getAll = await readAndNestedPopulate(
-    postId,
-    "comments",
-    "user",
+  const post = await readById(postModel, postId);
+  if (!post) {
+    return [];
+  }
+  const getAll = await findByInAndPopulte(
+    postModel,
+    "_id",
+    post.comments,
     "userId"
   );
 
-  return getAll?.comments;
+  return getAll;
 
   // return filterFunc(getAll.comments);
 };
+
+// postId,
+// "comments",
+// "user",
+// "userId"

@@ -5,3 +5,9 @@ export interface Update {
   numberOf: string;
   number: number;
 }
+
+export interface UpdatePhAndPl {
+  id: string;
+  field: string;
+  update: any;
+}

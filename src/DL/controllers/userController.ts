@@ -10,13 +10,13 @@ import userModel, { UserDocument } from "../models/user";
 //   return await userModel.find();
 // };
 
-export const readOne = async (email: string) => {
-  return await userModel.findOne({ email });
-};
+// export const readOne = async (email: string) => {
+//   return await userModel.findOne({ email });
+// };
 
-export async function readbyId(id: string) {
-  return await userModel.findById({ _id: id });
-}
+// export async function readbyId(id: string) {
+//   return await userModel.findById({ _id: id });
+// }
 
 // export async function del(id: string) {
 //   return await userModel.findByIdAndUpdate(
@@ -26,45 +26,45 @@ export async function readbyId(id: string) {
 //   );
 // }
 
-export const readOneAndPopulate = async (id: string, field: string) => {
-  return await userModel.findOne({ _id: id }).populate(field);
-};
+// export const readOneAndPopulate = async (id: string, field: string) => {
+//   return await userModel.findOne({ _id: id }).populate(field);
+// };
 
-export async function update(
-  id: string,
-  field: string,
-  update: string,
-  number: string
-) {
-  return await userModel.findOneAndUpdate(
-    { _id: id },
-    { $push: { [field]: update }, $inc: { [number]: 1 } },
-    { new: true }
-  );
-}
+// export async function update(
+//   id: string,
+//   field: string,
+//   update: string,
+//   number: string
+// ) {
+//   return await userModel.findOneAndUpdate(
+//     { _id: id },
+//     { $push: { [field]: update }, $inc: { [number]: 1 } },
+//     { new: true }
+//   );
+// }
 
-export async function updateUser(
-  userId: string,
-  field: string,
-  id: string,
-  number: string
-) {
-  return await userModel.findByIdAndUpdate(
-    userId,
-    {
-      $pull: {
-        [field]: id,
-      },
+// export async function updateUser(
+//   userId: string,
+//   field: string,
+//   id: string,
+//   number: string
+// ) {
+//   return await userModel.findByIdAndUpdate(
+//     userId,
+//     {
+//       $pull: {
+//         [field]: id,
+//       },
 
-      $inc: {
-        [number]: -1,
-      },
-    },
-    {
-      new: true,
-    }
-  );
-}
+//       $inc: {
+//         [number]: -1,
+//       },
+//     },
+//     {
+//       new: true,
+//     }
+//   );
+// }
 
 // export async function readAndNestedPopulate(
 //   userId: string,

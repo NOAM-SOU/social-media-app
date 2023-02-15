@@ -10,7 +10,7 @@ export async function readOne<T>(
   by: T[keyof T]
 ): Promise<T | null> {
   const filter: FilterQuery<T> = [{ [field]: by }];
-  return await model.findOne(filter);
+  return await model.findOne(filter[0]);
 }
 
 export async function readById<T>(

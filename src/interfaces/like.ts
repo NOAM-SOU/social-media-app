@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
+import { Document, Types } from "mongoose";
 
-export interface LikeI {
+export interface LikeI extends Document {
   userId: Types.ObjectId;
   postId: Types.ObjectId;
   createdAt: Date;

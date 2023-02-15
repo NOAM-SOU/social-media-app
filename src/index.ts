@@ -6,7 +6,7 @@ import { auth } from "./Middleware/auth";
 import userRouter from "./Routes/userRouter";
 import postRouter from "./Routes/postRouter";
 import commentRouter from "./Routes/commentRouter";
-import followRouter from "./Routes/followRouter";
+// import followRouter from "./Routes/followRouter";
 import likesRouter from "./Routes/likeRouter";
 
 dotenv.config();
@@ -28,11 +28,11 @@ app.use("/api/user/post", auth, postRouter);
 
 app.use("/api/user/like", auth, likesRouter);
 app.use("/api/user/comment", auth, commentRouter);
-app.use("/api/user/follow", auth, followRouter);
+// app.use("/api/user/follow", auth, followRouter);
 
 // app.use("/api/authuser", require("./Routes/userRouter"));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
