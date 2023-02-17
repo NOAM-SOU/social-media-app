@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import { connect } from "./DL/db";
 import { auth } from "./Middleware/auth";
@@ -8,6 +8,9 @@ import postRouter from "./Routes/postRouter";
 import commentRouter from "./Routes/commentRouter";
 // import followRouter from "./Routes/followRouter";
 import likesRouter from "./Routes/likeRouter";
+import uploadRouter from "./Routes/uploadRouter";
+
+import { uploadImg } from "./Middleware/uploadFile";
 
 dotenv.config();
 
@@ -24,10 +27,12 @@ app.get("/", (req, res) => {
 });
 app.use("/api/user", userRouter);
 
-app.use("/api/user/post", auth, postRouter);
+app.use("/api/post", auth, postRouter);
 
-app.use("/api/user/like", auth, likesRouter);
-app.use("/api/user/comment", commentRouter);
+app.use("/api/like", auth, likesRouter);
+app.use("/api/comment", commentRouter);
+app.use("/upload", uploadImg(), uploadRouter);
+
 // app.use("/api/user/follow", auth, followRouter);
 
 // app.use("/api/authuser", require("./Routes/userRouter"));

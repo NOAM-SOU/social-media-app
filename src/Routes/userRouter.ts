@@ -1,16 +1,22 @@
 import express from "express";
+import { getFileStream, uploadFile } from "../aws/s3";
 import { AuthError } from "../BL/errors/errors";
 import { login } from "../BL/userLogic/loginLogic";
 import { register } from "../BL/userLogic/registerLogic";
 const router = express.Router();
 import { getUser } from "../BL/userLogic/userLogic";
+import { uploadImg } from "../Middleware/uploadFile";
 
-router.post("/register", async (req, res) => {
+router.post("/register", uploadImg(), async (req, res) => {
   // work
   try {
     console.log("req.body:", req.body);
+    console.log("file", req.file);
+    const file = req.file!;
+    const upload = await uploadFile(file);
+    console.log("upload", upload);
 
-    const data = await register(req.body);
+    const data = await register({ ...req.body, profileImg: file.filename });
     res.send(data);
   } catch (err) {
     if (err instanceof AuthError) {
@@ -47,6 +53,11 @@ router.get("/getuser/:id", async (req, res) => {
 
     const data = await getUser(req.params.id);
     res.send(data);
+
+    if (data) {
+      const readStream = getFileStream(data?.profileImg);
+      readStream.pipe(res);
+    }
   } catch (err) {
     if (err instanceof Error) {
       res.status(401).send({

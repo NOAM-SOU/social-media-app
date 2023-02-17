@@ -4,6 +4,7 @@
 
 import { readById } from "../../global/readDocument";
 import userModel from "../../DL/models/user";
+import { getFileStream } from "../../aws/s3";
 
 export const getUser = async (id: string) => {
   return await readById(userModel, id);
