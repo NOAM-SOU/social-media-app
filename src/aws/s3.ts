@@ -1,6 +1,7 @@
 import S3 from "aws-sdk/clients/s3";
 import fs from "fs";
 import multer from "multer";
+import { PassThrough } from "stream";
 
 const s3 = new S3({
   region: process.env.AWS_BUCKET_REGION,
@@ -22,11 +23,21 @@ export function uploadFile(file: Express.Multer.File) {
 }
 
 // downloads a file from s3
-export function getFileStream(fileKey: string) {
+
+export async function getFileBuffer(fileKey: string): Promise<Buffer> {
   const downloadParams = {
     Key: fileKey,
-    Bucket: `${process.env.AWS_BUCKET_NAME}`,
+    Bucket: process.env.AWS_BUCKET_NAME!,
   };
 
-  return s3.getObject(downloadParams).createReadStream();
+  const obj = await s3.getObject(downloadParams).promise();
+  return obj.Body as Buffer;
 }
+
+// async function streamToBuffer(stream: PassThrough) {
+//   const chunks = [];
+//   for await (const chunk of stream) {
+//     chunks.push(chunk);
+//   }
+//   return Buffer.concat(chunks);
+// }

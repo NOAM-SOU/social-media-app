@@ -8,6 +8,8 @@ import { readOne } from "../../global/readDocument";
 import userModel from "../../DL/models/user";
 
 export async function login(user: ExistingUser) {
+  console.log("userLog", user);
+
   const userExisting = await readOne(userModel, "email", user.email);
   if (!userExisting) throw new AuthError("User not found", 2);
   const passMatch = await comparePass(user.password, userExisting.password);

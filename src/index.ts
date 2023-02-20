@@ -31,7 +31,7 @@ app.use("/api/post", auth, postRouter);
 
 app.use("/api/like", auth, likesRouter);
 app.use("/api/comment", commentRouter);
-app.use("/upload", uploadImg(), uploadRouter);
+// app.use("/upload", uploadImg(), uploadRouter);
 
 // app.use("/api/user/follow", auth, followRouter);
 

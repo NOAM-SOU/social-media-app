@@ -1,8 +1,8 @@
 import multer from "multer";
 const upload = multer({ dest: "uploads/" });
 
-export const uploadImg = () => {
+export const uploadImg = (name: string) => {
   console.log("here");
 
-  return upload.single("profileImg");
+  return upload.single(name);
 };

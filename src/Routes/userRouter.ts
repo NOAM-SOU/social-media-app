@@ -1,5 +1,5 @@
 import express from "express";
-import { getFileStream, uploadFile } from "../aws/s3";
+import { getFileBuffer, uploadFile } from "../aws/s3";
 import { AuthError } from "../BL/errors/errors";
 import { login } from "../BL/userLogic/loginLogic";
 import { register } from "../BL/userLogic/registerLogic";
@@ -7,7 +7,7 @@ const router = express.Router();
 import { getUser } from "../BL/userLogic/userLogic";
 import { uploadImg } from "../Middleware/uploadFile";
 
-router.post("/register", uploadImg(), async (req, res) => {
+router.post("/register", uploadImg("profileImg"), async (req, res) => {
   // work
   try {
     console.log("req.body:", req.body);
@@ -36,6 +36,8 @@ router.post("/login", async (req, res) => {
     res.send(data);
   } catch (err) {
     if (err instanceof AuthError) {
+      console.log(err);
+
       res.status(401).send({
         error: err.message,
         code: err.code,
@@ -45,20 +47,15 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/getuser/:id", async (req, res) => {
-  // work
-  console.log("parammm", req.params.id);
-
   try {
-    console.log("req.body:", req.body);
-
     const data = await getUser(req.params.id);
-    res.send(data);
-
     if (data) {
-      const readStream = getFileStream(data?.profileImg);
-      readStream.pipe(res);
+      const buffer = await getFileBuffer(data.profileImg);
+      const dataUrl = `data:image/*;base64,${buffer.toString("base64")}`;
+      res.send({ dataUrl, data });
     }
   } catch (err) {
+    console.error(err);
     if (err instanceof Error) {
       res.status(401).send({
         error: err.message,

@@ -1,18 +1,30 @@
 import express from "express";
+import { getFileBuffer, uploadFile } from "../aws/s3";
 import { PostError } from "../BL/errors/errors";
 import { addNewPost } from "../BL/postLogic/addPost";
 import { deletePost } from "../BL/postLogic/deletePost";
+import { getPost } from "../BL/postLogic/postLogic";
 import { removeSavedPost } from "../BL/postLogic/rmSavedPost";
 import { savePost } from "../BL/postLogic/savePost";
+import { uploadImg } from "../Middleware/uploadFile";
 
 const router = express.Router();
 
-router.post("/addnewpost/:id", async (req, res) => {
+router.post("/addnewpost/:id", uploadImg("img"), async (req, res) => {
+  console.log("reqqqqq", req);
+
   // work
   try {
     console.log("req.body:", req.body);
+    console.log("file", req.file);
+    const file = req.file!;
+    const upload = await uploadFile(file);
+    console.log("upload", upload);
 
-    const data = await addNewPost(req.body, req.params.id);
+    const data = await addNewPost(
+      { ...req.body, img: file?.filename },
+      req.params.id
+    );
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {
@@ -89,21 +101,26 @@ router.get("/removesavedpost/:userid/:postid", async (req, res) => {
 //     }
 //   }
 // });
-// router.get("/getpost/:id", async (req, res) => {
-//   // work
-//   try {
-//     console.log("req.body:", req.body);
+router.get("/getpost/:id", async (req, res) => {
+  // work
+  try {
+    console.log("req.body:", req.body);
 
-//     const data = await getPost(req.params.id);
-//     res.send(data);
-//   } catch (err) {
-//     if (err instanceof PostError) {
-//       res.status(401).send({
-//         error: err.message,
-//         code: err.code,
-//       });
-//     }
-//   }
-// });
+    const data = await getPost(req.params.id);
+    if (data) {
+      const buffer = await getFileBuffer(data.img);
+      const dataUrl = `data:image/*;base64,${buffer.toString("base64")}`;
+      res.send({ dataUrl, data });
+    }
+    res.send(data);
+  } catch (err) {
+    if (err instanceof PostError) {
+      res.status(401).send({
+        error: err.message,
+        code: err.code,
+      });
+    }
+  }
+});
 
 export default router;
