@@ -11,24 +11,34 @@ const s3 = new S3({
 
 // uploads a file to s3
 export function uploadFile(file: Express.Multer.File) {
-  const fileStream = fs.createReadStream(file.path);
+  try {
+    console.log("i am hereee");
 
-  const uploadParams = {
-    Bucket: `${process.env.AWS_BUCKET_NAME}`,
-    Body: fileStream,
-    Key: file.filename,
-  };
+    const fileStream = fs.createReadStream(file.path);
 
-  return s3.upload(uploadParams).promise();
+    const uploadParams = {
+      Bucket: `${process.env.AWS_BUCKET_NAME}`,
+      Body: fileStream,
+      Key: file.filename,
+    };
+
+    return s3.upload(uploadParams).promise();
+  } catch (err) {
+    console.log("errorrrrrr", err);
+  }
 }
 
 // downloads a file from s3
 
-export async function getFileBuffer(fileKey: string): Promise<Buffer> {
+export async function getFileBuffer(fileKey: string): Promise<Buffer | any> {
+  console.log("key", fileKey);
+
   const downloadParams = {
     Key: fileKey,
     Bucket: process.env.AWS_BUCKET_NAME!,
   };
+  const exist = await s3.headObject(downloadParams).promise();
+  if (!exist) console.log("not existttttt");
 
   const obj = await s3.getObject(downloadParams).promise();
   return obj.Body as Buffer;

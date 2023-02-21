@@ -7,6 +7,7 @@ import { getPost } from "../BL/postLogic/postLogic";
 import { removeSavedPost } from "../BL/postLogic/rmSavedPost";
 import { savePost } from "../BL/postLogic/savePost";
 import { uploadImg } from "../Middleware/uploadFile";
+import { getUserPosts } from "../BL/postLogic/postLogic";
 
 const router = express.Router();
 
@@ -85,22 +86,22 @@ router.get("/removesavedpost/:userid/:postid", async (req, res) => {
     }
   }
 });
-// router.get("/new/:id", async (req, res) => {
-//   // work
-//   try {
-//     console.log("req.body:", req.body);
+router.get("/new/:id", async (req, res) => {
+  console.log("req.body:", req.body);
+  // work
+  try {
+    const data = await getUserPosts(req.params.id);
 
-//     const data = await getUserPosts(req.params.id);
-//     res.send(data);
-//   } catch (err) {
-//     if (err instanceof PostError) {
-//       res.status(401).send({
-//         error: err.message,
-//         code: err.code,
-//       });
-//     }
-//   }
-// });
+    res.send(data);
+  } catch (err) {
+    if (err instanceof PostError) {
+      res.status(401).send({
+        error: err.message,
+        code: err.code,
+      });
+    }
+  }
+});
 router.get("/getpost/:id", async (req, res) => {
   // work
   try {

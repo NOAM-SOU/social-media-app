@@ -35,3 +35,21 @@ export async function findByInAndPopulte<T>(
     path: path,
   });
 }
+
+export async function populeted<T>(
+  model: Model<T>,
+  _id: string,
+  field: string
+) {
+  console.log("popuuuu");
+  try {
+    const filter: FilterQuery<T> = [{ [field]: { _id } }];
+
+    const array = await model.find(filter[0]).lean();
+    console.log("arr", array);
+
+    return array;
+  } catch (err: any) {
+    console.log(err);
+  }
+}
