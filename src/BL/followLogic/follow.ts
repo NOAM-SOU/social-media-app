@@ -1,20 +1,28 @@
 import { getFileBuffer } from "../../aws/s3";
 import userModel from "../../DL/models/user";
+import postModel from "../../DL/models/post";
 import { findByInAndPopulte } from "../../global/readAndPopulateDocument";
-import { read, readById, readOne } from "../../global/readDocument";
+import { findByIn, read, readById, readOne } from "../../global/readDocument";
 
 export const getFollowedPosts = async (userId: string) => {
   const get = await readById(userModel, userId);
   if (!get) {
     return [];
   }
-  const followedUsers = await findByInAndPopulte(
-    userModel,
-    "_id",
-    get.followed,
-    "posts"
+  const followedPosts = await findByIn(postModel, "userId", get.followed);
+  // const posts = followedUsers.flatMap((followedUser) => followedUser.posts);
+
+  const postWithImg = await Promise.all(
+    (followedPosts || []).map(async (p) => {
+      const imgBuffer = await getFileBuffer(p.img);
+      const dataUrl = `data:image/*;base64,${imgBuffer.toString("base64")}`;
+
+      console.log({ ...p, img: dataUrl });
+
+      return { ...p, img: dataUrl };
+    })
   );
-  return followedUsers.flatMap((followedUser) => followedUser.posts);
+  return postWithImg;
 };
 
 export const getUser = async (email: string) => {

@@ -30,7 +30,7 @@ router.get("/addfollow/:id/:follow", async (req, res) => {
 router.get("/getposts/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    console.log("req.body:", req.params.id);
 
     const data = await getFollowedPosts(req.params.id);
     res.send(data);
