@@ -6,7 +6,7 @@ import { deletePost } from "../BL/postLogic/deletePost";
 import { getPost } from "../BL/postLogic/postLogic";
 import { removeSavedPost } from "../BL/postLogic/rmSavedPost";
 import { savePost } from "../BL/postLogic/savePost";
-import { uploadImg } from "../Middleware/uploadFile";
+import { unLinkFile, uploadImg } from "../Middleware/uploadFile";
 import { getUserPosts } from "../BL/postLogic/postLogic";
 
 const router = express.Router();
@@ -21,6 +21,7 @@ router.post("/addnewpost/:id", uploadImg("img"), async (req, res) => {
     const file = req.file!;
     const upload = await uploadFile(file);
     console.log("upload", upload);
+    await unLinkFile(file.path);
 
     const data = await addNewPost(
       { ...req.body, img: file?.filename },
@@ -108,11 +109,7 @@ router.get("/getpost/:id", async (req, res) => {
     console.log("req.body:", req.body);
 
     const data = await getPost(req.params.id);
-    if (data) {
-      const buffer = await getFileBuffer(data.img);
-      const dataUrl = `data:image/*;base64,${buffer.toString("base64")}`;
-      res.send({ dataUrl, data });
-    }
+
     res.send(data);
   } catch (err) {
     if (err instanceof PostError) {

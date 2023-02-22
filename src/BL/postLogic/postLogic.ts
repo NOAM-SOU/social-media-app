@@ -30,5 +30,10 @@ export const getUserPosts = async (userId: string): Promise<any> => {
 };
 
 export const getPost = async (id: string) => {
-  return await readOne(postModel, "_id", id);
+  const post = await readOne(postModel, "_id", id);
+  if (post) {
+    const buffer = await getFileBuffer(post.img);
+    const dataUrl = `data:image/*;base64,${buffer.toString("base64")}`;
+    return { ...post, img: dataUrl };
+  }
 };

@@ -6,7 +6,7 @@ import { auth } from "./Middleware/auth";
 import userRouter from "./Routes/userRouter";
 import postRouter from "./Routes/postRouter";
 import commentRouter from "./Routes/commentRouter";
-// import followRouter from "./Routes/followRouter";
+import followRouter from "./Routes/followRouter";
 import likesRouter from "./Routes/likeRouter";
 import uploadRouter from "./Routes/uploadRouter";
 
@@ -33,7 +33,7 @@ app.use("/api/like", auth, likesRouter);
 app.use("/api/comment", commentRouter);
 // app.use("/upload", uploadImg(), uploadRouter);
 
-// app.use("/api/user/follow", auth, followRouter);
+app.use("/api/follow", auth, followRouter);
 
 // app.use("/api/authuser", require("./Routes/userRouter"));
 
