@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/addlike/:userid/:postid", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    console.log("req.body-addlikeee:", req.params.userid, req.params.postid);
 
     const data = await addLikeToPost(req.params.userid, req.params.postid);
     res.send(data);
