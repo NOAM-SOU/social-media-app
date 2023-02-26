@@ -37,6 +37,8 @@ export const removeLike = async (userId: string, postId: string) => {
 };
 
 export const getLikes = async (postId: string) => {
+  console.log("postid", postId);
+
   const likes = await readOneAndPopulate(postModel, postId, "likes");
   return likes;
 };

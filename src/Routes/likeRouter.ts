@@ -37,7 +37,7 @@ router.get("/removelike/:userid/:postid", async (req, res) => {
 router.get("/getlikes/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    console.log("req.body:", req.params.id);
 
     const data = await getLikes(req.params.id);
     res.send(data);

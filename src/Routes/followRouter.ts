@@ -60,19 +60,19 @@ router.get("/getfollowedusers/:id", async (req, res) => {
   }
 });
 
-// router.get("/removefollow/:userid/:followedid", async (req, res) => {
-//   try {
-//     console.log("req.body:", req.body);
+router.get("/removefollow/:userid/:followedid", async (req, res) => {
+  try {
+    console.log("req.body:", req.body);
 
-//     const data = await removeFollow(req.params.userid, req.params.followedid);
-//     res.send(data);
-//   } catch (err) {
-//     if (err instanceof Error) {
-//       res.status(401).send({
-//         error: err.message,Sign Up
-//       });
-//     }
-//   }
-// });
+    const data = await removeFollow(req.params.userid, req.params.followedid);
+    res.send(data);
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(401).send({
+        error: err.message,
+      });
+    }
+  }
+});
 
 export default router;
