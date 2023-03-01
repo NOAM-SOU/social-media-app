@@ -12,15 +12,15 @@ import { getUserPosts } from "../BL/postLogic/postLogic";
 const router = express.Router();
 
 router.post("/addnewpost/:id", uploadImg("img"), async (req, res) => {
-  console.log("reqqqqq", req);
+  // console.log("reqqqqq", req);
 
   // work
   try {
-    console.log("req.body:", req.body);
-    console.log("file", req.file);
+    // console.log("req.body:", req.body);
+    // console.log("file", req.file);
     const file = req.file!;
     const upload = await uploadFile(file);
-    console.log("upload", upload);
+    // console.log("upload", upload);
     await unLinkFile(file.path);
 
     const data = await addNewPost(
@@ -41,7 +41,7 @@ router.post("/addnewpost/:id", uploadImg("img"), async (req, res) => {
 router.delete("/deletepost/:userid/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await deletePost(req.params.userid, req.params.id);
     res.send(data);
@@ -58,7 +58,7 @@ router.delete("/deletepost/:userid/:id", async (req, res) => {
 router.get("/savepost/:id/:postid", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await savePost(req.params.id, req.params.postid);
     res.send(data);
@@ -74,7 +74,7 @@ router.get("/savepost/:id/:postid", async (req, res) => {
 router.get("/removesavedpost/:userid/:postid", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await removeSavedPost(req.params.userid, req.params.postid);
     res.send(data);
@@ -88,7 +88,7 @@ router.get("/removesavedpost/:userid/:postid", async (req, res) => {
   }
 });
 router.get("/new/:id", async (req, res) => {
-  console.log("req.body:", req.body);
+  // console.log("req.body:", req.body);
   // work
   try {
     const data = await getUserPosts(req.params.id);
@@ -106,7 +106,7 @@ router.get("/new/:id", async (req, res) => {
 router.get("/getpost/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body.posttttttt:", req.params.id);
 
     const data = await getPost(req.params.id);
 

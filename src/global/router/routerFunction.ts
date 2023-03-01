@@ -15,7 +15,7 @@ export function getRouter<T>(
   router.get(path, async (req, res) => {
     // work
     try {
-      console.log("req.body:", req.body);
+      // console.log("req.body:", req.body);
 
       const data = await func(argToFunc);
       res.send(data);

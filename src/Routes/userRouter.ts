@@ -11,8 +11,8 @@ import { unLinkFile, uploadImg } from "../Middleware/uploadFile";
 router.post("/register", uploadImg("profileImg"), async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
-    console.log("file", req.file);
+    // console.log("req.body:", req.body);
+    // console.log("file", req.file);
     const file = req.file!;
     const upload = await uploadFile(file);
     console.log("upload", upload);
@@ -32,7 +32,7 @@ router.post("/register", uploadImg("profileImg"), async (req, res) => {
 router.post("/login", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await login(req.body);
     res.send(data);
@@ -65,7 +65,7 @@ router.get("/getuser/:id", async (req, res) => {
 router.get("/getall", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await getAllUsers();
     res.send(data);

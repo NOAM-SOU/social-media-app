@@ -11,14 +11,14 @@ import { getFileBuffer } from "../../aws/s3";
 export const getUserPosts = async (userId: string): Promise<any> => {
   try {
     const posts = await populeted(postModel, userId, "userId");
-    console.log("posts", posts);
+    // console.log("posts", posts);
 
     const postWithImg = await Promise.all(
       (posts || []).map(async (p) => {
         const imgBuffer = await getFileBuffer(p.img);
         const dataUrl = `data:image/*;base64,${imgBuffer.toString("base64")}`;
 
-        console.log({ ...p, img: dataUrl });
+        // console.log({ ...p, img: dataUrl });
 
         return { ...p, img: dataUrl };
       })
@@ -30,6 +30,8 @@ export const getUserPosts = async (userId: string): Promise<any> => {
 };
 
 export const getPost = async (id: string) => {
+  console.log(id, "THE POST ID");
+
   const post = await readOne(postModel, "_id", id);
   if (post) {
     const buffer = await getFileBuffer(post.img);

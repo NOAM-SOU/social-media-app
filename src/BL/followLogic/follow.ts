@@ -17,11 +17,14 @@ export const getFollowedPosts = async (userId: string) => {
       const imgBuffer = await getFileBuffer(p.img);
       const dataUrl = `data:image/*;base64,${imgBuffer.toString("base64")}`;
 
-      console.log({ ...p, img: dataUrl });
+      // console.log({ ...p, img: dataUrl });
 
       return { ...p, img: dataUrl };
     })
   );
+
+  // console.log(postWithImg, "POST WITH IMG");
+
   return postWithImg;
 };
 
@@ -32,20 +35,20 @@ export const getUser = async (email: string) => {
 export const getAllUsers = async () => {
   try {
     const users = await read(userModel);
-    console.log("usersss", users);
+    // console.log("usersss", users);
 
     const userWithImg = await Promise.all(
       (users || []).map(async (u) => {
         const imgBuffer = await getFileBuffer(u.profileImg);
         const dataUrl = `data:image/*;base64,${imgBuffer.toString("base64")}`;
 
-        console.log("getalllll", { ...u, profileImg: dataUrl });
+        // console.log("getalllll", { ...u, profileImg: dataUrl });
 
         return { ...u, profileImg: dataUrl };
       })
     );
     return userWithImg;
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
   }
 };

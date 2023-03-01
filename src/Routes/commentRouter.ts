@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/addcomments/:userid/:postid", async (req, res) => {
   // work
   try {
-    console.log("req", req.params.userid, req.params.postid, req.body);
+    // console.log("req", req.params.userid, req.params.postid, req.body);
 
     const data = await addNewComment(
       req.params.userid,
@@ -29,7 +29,7 @@ router.post("/addcomments/:userid/:postid", async (req, res) => {
 router.get("/getcomments/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await getComments(req.params.id);
     res.send(data);

@@ -16,8 +16,14 @@ export async function readOne<T>(
 export async function readById<T>(
   model: Model<T>,
   id: string
-): Promise<T | null> {
-  return await model.findById({ _id: id }).lean();
+): Promise<T | null | any> {
+  try {
+    return await model.findById({ _id: id }).lean();
+  } catch (error) {
+    console.log(id, "THE ID");
+
+    console.log(error, "THE ERROR IS HERE");
+  }
 }
 
 export async function findByIn<T>(
@@ -26,7 +32,7 @@ export async function findByIn<T>(
   values: Types.ObjectId[] | Types.ObjectId
 ) {
   const filter: FilterQuery<T> = [{ [field]: { $in: values } }];
-  console.log("filter", filter);
+  // console.log("filter", filter);
 
   return await model.find(filter[0]).lean();
 }

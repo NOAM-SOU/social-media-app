@@ -7,7 +7,7 @@ import userModel from "../../DL/models/user";
 import postModel from "../../DL/models/post";
 
 export const addNewPost = async (post: PostI, id: string) => {
-  console.log("new", post, "id", id);
+  // console.log("new", post, "id", id);
 
   const newPost = await create(postModel, post, undefined, id);
   const up: Update = {

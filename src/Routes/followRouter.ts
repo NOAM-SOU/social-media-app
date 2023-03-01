@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/addfollow/:id/:follow", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await addFollow(req.params.id, req.params.follow);
     res.send(data);
@@ -31,7 +31,7 @@ router.get("/addfollow/:id/:follow", async (req, res) => {
 router.get("/getposts/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.params.id);
+    // console.log("req.body:", req.params.id);
 
     const data = await getFollowedPosts(req.params.id);
     res.send(data);
@@ -47,7 +47,7 @@ router.get("/getposts/:id", async (req, res) => {
 router.get("/getfollowedusers/:id", async (req, res) => {
   // work
   try {
-    console.log("req.body:", req.params.id);
+    // console.log("req.body:", req.params.id);
 
     const data = await getFollowedUsers(req.params.id);
     res.send(data);
@@ -62,7 +62,7 @@ router.get("/getfollowedusers/:id", async (req, res) => {
 
 router.get("/removefollow/:userid/:followedid", async (req, res) => {
   try {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const data = await removeFollow(req.params.userid, req.params.followedid);
     res.send(data);

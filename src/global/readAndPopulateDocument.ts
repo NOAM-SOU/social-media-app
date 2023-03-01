@@ -29,7 +29,7 @@ export async function findByInAndPopulte<T>(
   path: string
 ) {
   const filter: FilterQuery<T> = [{ [field]: { $in: values } }];
-  console.log("filter", filter);
+  // console.log("filter", filter);
 
   return await model.find(filter[0]).populate({
     path: path,
@@ -41,12 +41,12 @@ export async function populeted<T>(
   _id: string,
   field: string
 ) {
-  console.log("popuuuu");
+  // console.log("popuuuu");
   try {
     const filter: FilterQuery<T> = [{ [field]: { _id } }];
 
     const array = await model.find(filter[0]).lean();
-    console.log("arr", array);
+    // console.log("arr", array);
 
     return array;
   } catch (err: any) {
