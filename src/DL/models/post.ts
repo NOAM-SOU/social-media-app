@@ -7,7 +7,6 @@ export type PostDocument = HydratedDocument<PostI>;
 const postSchema = new mongoose.Schema<PostI>({
   title: {
     type: String,
-    required: true,
   },
   content: {
     type: String,

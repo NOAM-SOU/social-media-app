@@ -1,6 +1,6 @@
 import express from "express";
 import { addFollow } from "../BL/followLogic/addFollow";
-import { getFollowedPosts } from "../BL/followLogic/follow";
+import { followStatus, getFollowedPosts } from "../BL/followLogic/follow";
 import { getFollowedUsers } from "../BL/followLogic/followedUsers";
 import { removeFollow } from "../BL/followLogic/removeFollow";
 // import {
@@ -65,6 +65,21 @@ router.get("/removefollow/:userid/:followedid", async (req, res) => {
     // console.log("req.body:", req.body);
 
     const data = await removeFollow(req.params.userid, req.params.followedid);
+    res.send(data);
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(401).send({
+        error: err.message,
+      });
+    }
+  }
+});
+
+router.get("/followstatus/:userid/:otherid", async (req, res) => {
+  try {
+    // console.log("req.body:", req.body);
+
+    const data = await followStatus(req.params.userid, req.params.otherid);
     res.send(data);
   } catch (err) {
     if (err instanceof Error) {

@@ -3,6 +3,7 @@ import userModel from "../../DL/models/user";
 import postModel from "../../DL/models/post";
 import { findByInAndPopulte } from "../../global/readAndPopulateDocument";
 import { findByIn, read, readById, readOne } from "../../global/readDocument";
+import { Types } from "mongoose";
 
 export const getFollowedPosts = async (userId: string) => {
   const get = await readById(userModel, userId);
@@ -51,4 +52,15 @@ export const getAllUsers = async () => {
   } catch (err: any) {
     // console.log(err);
   }
+};
+
+export const followStatus = async (
+  userId: string,
+  other: string
+): Promise<boolean> => {
+  const user = await readById(userModel, userId);
+  const array = user.followed.map((e: Types.ObjectId) => e.toString());
+  const inc = array.includes(other);
+  console.log(inc, "INCLUEDS");
+  return inc;
 };
